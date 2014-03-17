@@ -2,7 +2,7 @@ from urlparse import urlparse
 import simplejson as json
 
 
-class BatchResponseMiddleware(object):
+class BatchResquestMiddleware(object):
     def __init__(self, application, endpoint=None):
         self.app = application
         self.endpoint = endpoint
@@ -16,7 +16,7 @@ class BatchResponseMiddleware(object):
 
     def batch_response(self, environ, start_response):
         request_body_size = int(environ.get('CONTENT_LENGTH', 0))
-        request_body = environ['wsgi.input'].read(request_body_size)
+        request_body = environ['wsgi.input'].read(request_body_size) or '{}'
 
         # TODO: json decode error handling
         payload = json.loads(request_body)
